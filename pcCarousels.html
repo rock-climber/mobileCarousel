@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style>
+		html,body{
+			width: 100%;
+		}
+		ul{
+			list-style: none;
+		}
+		*{margin: 0;padding: 0;}
+		.banner{
+			width: 100%;
+			height: auto;
+		}
+		 .indexNum{
+            position: absolute;
+            z-index: 88;
+            width:80px;
+            height:30px;/* 
+            background: #000;
+            opacity: 0.5; */
+            display: inline-block;
+            right:20px;
+            color: #fff;
+            line-height: 30px;
+            border-radius: 5px;
+            bottom:10px;
+            text-align: center;
+            display: none;
+        }
+        .large-box{
+			width: 100%;
+			height: 402px; 
+			position: relative;
+			overflow: hidden;
+		}
+		.large-box img{
+			display:block;
+			width: 100%;
+			height: 402px;
+			/*height:100%;*/
+		}
+		.large-left{
+			float:left;
+			background-image:url('img/btn.png');
+			background-position: -52px 0;
+			cursor:pointer;
+			width: 30px;
+			height: 66px;
+			position: absolute;
+		    top: 167px;
+		    left: 0;
+			z-index:2;
+		}
+		.large-right{
+			float:left;
+			background-image:url('img/btn.png');
+			background-position: -82px 0;
+			cursor:pointer;
+			width: 30px;
+			height: 66px;
+			position: absolute;
+		    top: 167px;
+		    right: 0;
+		}
+		.small-left{
+			float:left;
+			margin-right:1px;
+			background-image:url('img/btn.png');
+			background-position: -26px 0;
+			cursor:pointer;
+			width: 26px;
+			height: 60px;
+		}
+		.small-right{
+			float:right;
+			background-image:url('img/btn.png');
+			background-position: 0 0;
+			cursor:pointer;
+			width: 26px;
+			height: 60px;
+		}
+		.carImg-bottom{
+			width: 100%;
+			margin-top: 10px;
+			overflow: hidden;
+		}
+		.small-list{
+			position:relative;
+			float:left;
+			width:546px;
+			height: 60px;
+			overflow:hidden;
+		}
+		.small-list ul{
+			height:100%;
+			overflow:hidden;
+		}
+		.small-list ul li{
+			position:relative;
+			float:left;
+			margin-left:1px;
+			width:90px;
+			height: 100%;
+			overflow: hidden;
+		}
+		.small-list ul li img{
+			display:block;
+			width: 100%;
+			height: 100%;
+		}
+		.small-list ul li .markcentD{
+			width: 30px;
+			height:10px;
+			bottom:5px;
+		}
+		.small-list ul li .bun_bg{
+			display:none;
+			position:absolute;
+			top:0;
+			left:0;
+		    width: 88px;
+		    height: 58px;
+			border: 1px solid #117FD4;
+		}
+		.small-list ul li.on .bun_bg{display:block;}
+	</style>
+	<body>
+		 <div class="banner">
+                <div class="large-box">      
+                    <span class="left-btn large-left"></span>
+                    <p class="indexNum"><em class="daynum" style="font-size: 18px;color: #DD2727">1</em>/<em class="allnum">5</em> </p>
+       
+                    <ul class="large-ul" style="position: relative;overflow: hidden"> 
+	                    <li>
+	                        <img src="img/banner@2x.png" alt="">
+	                    </li>
+	                    <li>
+	                        <img src="img/banner@2x.png" alt="">
+	                    </li>
+	                    <li>
+	                        <img src="img/banner@2x.png" alt="">
+	                    </li>
+
+                    </ul>
+                    <span class="right-btn large-right"></span>
+                </div>
+                <div class="carImg-bottom">
+                    <div class="small-list">
+                        <ul class="small-ul">
+                            <li>
+                                <img src="img/banner@2x.png">
+                                <div class="bun_bg"></div>
+                            </li>
+                            <li>
+                                <img src="img/banner@2x.png">
+                                <div class="bun_bg"></div>
+                            </li>
+                            <li>
+                                <img src="img/banner@2x.png">
+                                <div class="bun_bg"></div>
+                            </li>        
+             
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+	</body>
+	<script src="jquery-1.9.1.min.js"></script>
+	<script src="carousel.min.js"></script>
+	<script>
+		$(function(){
+		
+            var $introduce = $('#introduce');
+            var $introducePic = $('.introduce-pic');
+            var $introduceI = $('.introduce-li').find('i');
+            $introduce.mouseover(function () {
+                $introducePic.show();
+                $introduce.addClass('redb');
+                $introduceI.addClass('redi');
+            });
+            //鼠标移开
+            $introducePic.mouseout(function () {
+                $introducePic.hide();
+                $introduce.removeClass('redb');
+                $introduceI.removeClass('redi');
+            });
+                        // /* 商品轮播图（带缩略图的轮播效果） */
+            $(".banner").thumbnailImg({
+            	large_elem: ".large-box",
+            	small_elem: ".small-list",
+            	left_btn: ".left-btn",
+            	right_btn: ".right-btn"
+            });
+            var $liCentLength = $('.small-ul li').length;
+            $('.allnum').text($liCentLength);
+            if($liCentLength>1){
+                $('.indexNum').show();
+            }else{
+                $('.indexNum').hide();
+            }
+            //点击左侧按钮进行数字倒叙
+            $('.large-left').on("click",function(){
+                getBannerNum();
+            })
+            //点击右侧按钮进行数字倒叙
+            $('.large-right').on("click",function(){
+                getBannerNum();
+            })
+            $('.small-ul li').on('click',function() {
+                getBannerNum();
+            })
+            //small箭头进行数字更换
+            $('.small-right').on('click',function(){
+                getBannerNum();
+            });
+            $('.small-left').on('click',function(){
+                getBannerNum();
+            });
+            function getBannerNum(){
+                var $bannerList = $('.small-ul li');
+                $bannerList.each(function(i,item){
+                    if($(this).attr("class")=='on'){
+                        $('.daynum').text($(this).index()+1);
+                    }
+                })
+            }
+		})
+	</script>
+</html>
