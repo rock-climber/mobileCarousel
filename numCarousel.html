@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	</head>
+	<style>
+		html,body{
+			width: 100%;
+		}
+		ul{
+			list-style: none;
+		}
+		*{margin: 0;padding: 0;}
+		em{font-style: normal}
+		.banner{position:relative; overflow:hidden; width:100%; overflow:hidden; height:253px;}
+		.banner ul{width:100%; position:absolute; width:100%; height:100%; overflow:hidden;}
+		.banner ul li{position:absolute; width:100%; height:100%; left:0px; top:0px;}
+		.banner ul li img{width:100%; height:100%; display:block;}
+		.qhbtna{width:100%; height:2rem; position:absolute; bottom:0;z-index:9; text-align:center;}
+		.qhbtna a{color:#333; border: 1.5px solid #FFFFFF;font-family:Arial, Helvetica, sans-serif; background:none; -moz-border-radius: 0.7rem/0.7rem; -webkit-border-radius:0.7rem/0.7rem; border-radius: 0.7rem/0.7rem; display:inline-block; width:0.7rem; height:0.7rem; line-height:0.7rem; margin-right:0.5rem; text-align:center;}
+		.qhbtna a.qhon{background:#fff; color:#fff;}
+		.detailQhbtna{
+		    bottom: 2%;
+		    height: 3.4rem;
+		}
+		.detailQhbtna a{
+		    display: none;
+		}
+		.detailQhbtna .img_num{
+		    width: 25%;
+		    display: inline-block;
+		    background-color: rgba(6,6,6,0.65);
+		    color: #fff;
+		    height: 2.4rem;
+		    line-height: 2.4rem;
+		    text-align: center;
+		    font-size: 1.4rem;
+		    margin-right: 2%;
+		    border-radius: 11px;
+		    padding-right: 2%;
+		}
+		.img_num img{
+		    width: 20%;
+		    vertical-align: middle;
+		    margin: 0 8% 0 0.6rem;
+		}
+	</style>
+	<body>
+		<div class="banner">
+			<ul>
+				<li><img src="img/Group 4@3x.png"></li>
+				<li><img src="img/Group 5@3x.png"></li>				
+				<li><img src="img/huge.jpg"></li>
+			</ul>
+			<div class="qhbtna detailQhbtna" id="qhbtna">
+				<span class='img_num'>
+					<img src='img/iconimgop.png'>
+					<em>1</em> / 3
+				</span>
+				<a href='javascript:void(0)'></a>
+				<a href='javascript:void(0)'></a>
+				<a href='javascript:void(0)'></a>
+			</div>
+			<span class="bannerL"></span>
+			<span class="bannerR"></span>
+		</div>
+	</body>
+	<script src="hammerA.js"></script>
+	<script src="jquery-2.2.3.min.js"></script>
+	<script>
+		if ($(".banner ul li").length > 1) {
+            fullAnimatbanner(".banner ul", ".banner ul li", ".qhbtna a", ".bannerR", ".bannerL", "qhon", 5000);
+            $touchEvent(".banner", function() {
+                $(".bannerL").trigger("click");
+            }, function() {
+                $(".bannerR").trigger("click");
+            }, function() {}, function() {});
+        } else {
+            $('#qhbtna .img_num').hide();
+        }
+        function fullAnimatbanner(obj1,obj2,num,btnL,btnR,css,time){
+			$(obj1).css("width","100%");
+			$(obj2).css({position:"absolute",top:0,left:"100%",width:"100%"});
+			var liliength=$(obj2).length;
+			var curptins=0;
+			var setIntervalsAAA;
+			$(obj2).eq(curptins).css({left:0});
+			$(num).removeClass(css).eq(curptins).addClass(css);
+		
+			$(num).click(function(){
+				var curindex=$(num).index(this);
+				if(curindex!=curptins){
+					animatgundxz(curindex,true);
+				}
+	
+			})
+		
+			$(btnL).click(function(){
+				if(curptins-1<0){
+					animatgundxz(liliength-1,false);
+				}else{
+					animatgundxz(curptins-1,false);
+				}
+				
+			})
+		
+			$(btnR).click(function(){
+				if(curptins+1>liliength-1){
+					animatgundxz(0,true);
+				}else{
+					animatgundxz(curptins+1,true);
+				}
+				
+			})
+		
+			setIntervalsAAA=setInterval(functionTimegd,time);
+			function functionTimegd(){
+				if(curptins+1>liliength-1){
+					animatgundxz(0,true);
+				}else{
+					animatgundxz(curptins+1,true);
+				}
+			
+		
+			}
+		
+			function animatgundxz(cuet,drect){
+				//alert(cuet)
+				clearInterval(setIntervalsAAA);
+				setIntervalsAAA=setInterval(functionTimegd,time);
+				$(obj2).stop().css({left:"100%"});
+				if(drect){
+					$(obj2).eq(cuet).stop().css({left:"100%"});
+					$(obj2).eq(cuet).animate({left:0},500)
+					$(obj2).eq(curptins).stop().css({left:"0%"})
+					$(obj2).eq(curptins).animate({left:"-100%"},500);
+				}else{
+					$(obj2).eq(cuet).css({left:"-100%"}).animate({left:0},500);
+					$(obj2).eq(curptins).css({left:"0%"}).animate({left:"100%"},500);
+				}
+				curptins=cuet;
+				
+				$(num).removeClass(css).eq(curptins).addClass(css);
+				$('#qhbtna span em').text($(num).eq(curptins).index());
+			}
+		
+			$(window).resize(function(){
+				$(obj2).stop().css({left:"100%"});
+				$(obj2).eq(curptins).stop().css({left:0});
+			})
+	
+		}
+	
+	</script>
+</html>
